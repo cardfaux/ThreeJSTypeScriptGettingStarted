@@ -1,12 +1,18 @@
 import * as THREE from '/build/three.module.js';
 import { OrbitControls } from '/jsm/controls/OrbitControls';
-// THE SCENE
+// THE SCENE tree like structure of meshes lights groups 3d positions cameras
 const scene = new THREE.Scene();
-// THE CAMERA
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-// THE RENDERER
+scene.background = new THREE.Color(0x111111);
+// THE CAMERA draws scene within the frustum dimensions onto a 3d canvas
+const camera = new THREE.PerspectiveCamera(75, // FIELD OF VIEW default 50
+window.innerWidth / window.innerHeight, // ASPECT RATIO default 1
+0.1, // NEAR PLANE default is 0.1
+1000 // FAR PLANE default 2000
+);
+// THE RENDERER extension of the html canvas
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+// Dynamically drawing the canvas to the html document
 document.body.appendChild(renderer.domElement);
 // THE CONTROLS
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -18,6 +24,7 @@ const material = new THREE.MeshBasicMaterial({
 });
 // THE CUBE CONTAINING THE GEOMETRY AND MATERIAL
 const cube = new THREE.Mesh(geometry, material);
+// ADDED THE CUBE TO THE SCENE
 scene.add(cube);
 // POSITIONING THE CAMERA ON THE ZED AXIS
 camera.position.z = 2;
